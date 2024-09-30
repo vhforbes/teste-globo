@@ -1,6 +1,6 @@
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 from src.models import User
 from . import schemas
 
@@ -16,7 +16,9 @@ class UserService:
         user_exists = self.db.query(User).filter(User.email == user.email).first()
 
         if user_exists:
-            raise HTTPException(status_code=400, detail="Email already in use")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail="Email already in use"
+            )
 
         hashed_password = pwd_context.hash(user.password)
 

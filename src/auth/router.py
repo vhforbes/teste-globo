@@ -1,20 +1,20 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
+from src.database import get_db
+from src.auth.service import AuthService
+from sqlalchemy.orm import Session
+from . import schemas
 
 auth_router = APIRouter()
 
 
 @auth_router.post("/login")
-def login(user: LoginPayload):
+def login(loginPayload: schemas.LoginPayload, db: Session = Depends(get_db)):
 
-    # result, status_code = auth_service.login(email=user.email, password=user.password)
-    return JSONResponse(content=result, status_code=status_code)
+    auth_service = AuthService(db)
 
+    result, status_code = auth_service.login(
+        email=loginPayload.email, password=loginPayload.password
+    )
 
-@auth_router.post("/refresh_access_token")
-def refresh_access_token(refresh_token_payload: RefreshTokenPayload):
-
-    # result, status_code = auth_service.refresh_access_token(
-    #     refresh_token=refresh_token_payload.refresh_token
-    # )
     return JSONResponse(content=result, status_code=status_code)
