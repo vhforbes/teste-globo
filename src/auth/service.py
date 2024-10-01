@@ -27,7 +27,9 @@ class AuthService:
                 headers={"WWW-Authenticate": "Bearer"},
             )
 
-        access_token = self.create_access_token(data={"sub": user.email})
+        access_token = self.create_access_token(
+            data={"sub": user.email, "user_id": user.id, "user_name": user.name}
+        )
 
         return {"access_token": access_token, "token_type": "bearer"}, 200
 

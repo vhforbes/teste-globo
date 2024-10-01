@@ -10,7 +10,7 @@ from src.models import Video
 video_router = APIRouter()
 
 
-@video_router.post("/create-video", response_model=VideoSchema)
+@video_router.post("/video", response_model=VideoSchema)
 def create_video(video: CreateVideoPayload, db: Session = Depends(get_db)):
     video_service = VideoService(db)
 
