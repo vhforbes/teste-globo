@@ -6,6 +6,10 @@
 - Python3 instalado
 - Poetry
 
+## Condigurando o .env
+
+Copie para um arquivo .env o .env.example fornecido
+
 ## Database
 
 Inicialmente, vamos rodar nosso banco MySQL.
